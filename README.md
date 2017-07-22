@@ -1,5 +1,6 @@
 # angular-2-cookbook
-Source code for Angular 2 Cookbook
+* Source code for Angular 2 Cookbook
+* markdown cheat sheet https://guides.github.com/features/mastering-markdown/
 # Chapter 2 
 * 1315 Configuring Mutual Parent-Child Awareness with ViewChild and forwardRef
 * 2048 Utilizing Component Lifecycle Hooks
