@@ -28,6 +28,90 @@
 * 9302 Implementing basic forms with FormBuilder and formControlName
 
 # Chapter 4
+* 0905 Converting an Http Service Observable into a ZoneAwarePromise
 
+* 4362 Cancelling Asynchronous Actions with Promise.race()
+* 5195 Understanding and Implementing Basic Promises
+* 5244 Converting a Promise into an Observable
+* 6828 Chaining Promises and Promise Handlers
+* 8496 Implementing Promise Barriers with Promise.all()
+* 9315 Creating Promise Wrappers with Promise.resolve() and Promise.reject()
 
 # Chapter 5
+* 2417 Building a Generalized Publish-Subscribe Service to Replace $broadcast, $emit, and $on
+* 4112 Using QueryLists and Observables to Follow Changes in ViewChildren
+  
+```javascript
+constructor(private changeDetectorRef_:ChangeDetectorRef) {}
+ngAfterViewInit() {
+    this.innerComponents.changes
+      .subscribe(innerComponents => {
+        this.lastVal = (innerComponents.last || {}).val;
+        this.changeDetectorRef_.detectChanges();
+      });
+  }
+
+```
+* 4121 Basic Utilization of Observables with Http
+* 4839 Implementing a Publish-Subscribe Model using Subjects
+* 6957 Creating an Observable Authentication Service using BehaviorSubjects
+* 8629 Building a Full-Featured AutoComplete with Observables
+```javascript
+constructor(private apiService_:APIService) {
+    this.queryField.valueChanges
+      .debounceTime(200)
+      .distinctUntilChanged()
+      .switchMap(query => this.apiService_.search(query))
+      .subscribe(result => this.results.push(result));
+  }
+
+@Injectable()
+export class APIService {
+  constructor(private http_:Http) {}
+  
+  search(query:string):Observable<string> {
+    return this.http_
+      .get('static/response.json')
+      .map(r => r.json()['prefix'] + query)
+      .concatMap(
+        x => Observable.of(x).delay(Math.random()*1000));
+  }
+}
+```
+
+# Chapter 6
+* 1355 Selecting a LocationStrategy for Path Construction
+```javascript
+import {LocationStrategy, HashLocationStrategy} 
+providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+  ],
+
+```
+
+* 3308 Building Stateful Route Behavior with RouterLinkActive
+```javascript
+@Component({
+  selector: 'root',
+  template: `
+    <h1>Root component</h1>
+    <a [routerLink]="['']"
+       [routerLinkActive]="'active-navlink'"
+       [routerLinkActiveOptions]="{exact:true}">Default</a>
+    <a [routerLink]="['article']"
+       [routerLinkActive]="'active-navlink'"
+       [routerLinkActiveOptions]="{exact:true}">Article</a>
+    <router-outlet></router-outlet>
+  `,
+  styles: [`
+    .active-navlink {
+      color: red; 
+      text-transform: uppercase;
+    }
+  `]
+})
+export class RootComponent {}
+
+```
+* 4553 Working with Matrix URL Parameters and Routing Arrays
+
